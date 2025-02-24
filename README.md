@@ -9,7 +9,7 @@
 - 💬 Ask me about **[Ideas and presets]**
 - 📫 Reach me at **[None]**
 - ⚡ Fun fact: **[-]** 
-- `Hola` 
+- ```Hola``` 
 
 ## 🛠 Tech Stack
 
