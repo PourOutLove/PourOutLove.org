@@ -4,11 +4,12 @@
 
 ## 🚀 About Me
 
-- 🔭 I’m currently working on **[Your Project Name](https://github.com/PourOutLove/PourOutLove.com)**
-- 🌱 I’m currently learning **[Technology/Skill]**
-- 💬 Ask me about **[Your Expertise]**
-- 📫 Reach me at **[Your Email]**
-- ⚡ Fun fact: **[Your Fun Fact]**
+- 🔭 I’m currently working on **[Pour out love website](https://github.com/PourOutLove/PourOutLove.com)**
+- 🌱 I’m currently learning **[crafting]**
+- 💬 Ask me about **[Ideas and presets]**
+- 📫 Reach me at **[None]**
+- ⚡ Fun fact: **[-]** 
+- `Hola` 
 
 ## 🛠 Tech Stack
 
