@@ -147,7 +147,7 @@
             font-size: 16px;
         }
         .stats div {
-            font-family: Arial, sans-serif; /* Regular font for "Posts," "Followers," "Following" */
+            font-family: Arial, sans-serif;
         }
         .stats span {
             color: grey;
@@ -185,6 +185,31 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
+            font-family: Arial, sans-serif; /* Regular font for popup */
+            text-align: left;
+        }
+        .typing-text {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 2s steps(40, end) forwards;
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        .popup-btn {
+            margin-top: 10px;
+            padding: 5px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+        }
+        .popup-btn:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -243,13 +268,18 @@
         <button class="btn message-btn" onclick="showMessage()">Message</button>
         <button class="btn follow-btn" onclick="followUser()">Follow</button>
     </div>
-    <div class="popup" id="popup">You need to open Instagram to write me something.</div>
+    <div class="popup" id="popup">
+        <span class="typing-text" id="popup-text">You need to open Instagram to write me something.</span>
+        <button class="popup-btn" onclick="hidePopup()">OK</button>
+    </div>
 
     <script>
         const van = document.getElementById("van");
         const cloud = document.getElementById("thinking-cloud");
         const text = document.getElementById("thinking-text");
         const buttons = document.querySelector(".thinking-buttons");
+        const popup = document.getElementById("popup");
+        const popupText = document.getElementById("popup-text");
 
         van.addEventListener("click", function() {
             van.style.animationPlayState = "paused";
@@ -284,11 +314,18 @@
         setInterval(updateCountdown, 1000);
 
         function showMessage() {
-            document.getElementById('popup').style.display = 'block';
-            document.querySelector('.follow-btn').classList.add('highlight');
+            popup.style.display = 'block';
+            popupText.style.animation = 'none'; // Reset animation
             setTimeout(() => {
-                document.getElementById('popup').style.display = 'none';
-            }, 3000);
+                popupText.style.animation = 'typing 2s steps(40, end) forwards'; // Start typing animation
+            }, 10); // Small delay to ensure reset applies
+            document.querySelector('.follow-btn').classList.add('highlight');
+            // No auto-hide; wait for OK button
+        }
+
+        function hidePopup() {
+            popup.style.display = 'none';
+            document.querySelector('.follow-btn').classList.remove('highlight');
         }
 
         function followUser() {
