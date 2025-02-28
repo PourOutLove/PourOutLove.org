@@ -132,7 +132,6 @@
             background-color: red;
             color: white;
         }
-        /* Profile Section Styles */
         .profile-img {
             width: 150px;
             height: 150px;
@@ -185,7 +184,7 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            font-family: Arial, sans-serif; /* Regular font for popup */
+            font-family: Arial, sans-serif;
             text-align: left;
         }
         .typing-text {
@@ -214,29 +213,16 @@
     </style>
 </head>
 <body>
-
-    <!-- Title -->
     <div class="title">Pour out love</div>
-
-    <!-- Coming Soon Text -->
     <div class="coming-soon">Coming soon.....</div>
-
-    <!-- Moving Truck Image -->
     <div class="van-container">
         <img src="https://assets.onecompiler.app/42afw7ru2/43adf9dmf/logo-removebg-preview.png" alt="Delivery Van" class="van" id="van">
         <div class="thinking-cloud" id="thinking-cloud">
             <span class="typing" id="thinking-text">Why did you stop us? 😡 We are late for delivery, let us go!</span>
-            <div class="thinking-buttons">
-                <button class="go-btn" onclick="resumeVan('Okay, thanks :D')">OK, go</button>
-                <button class="stay-btn" onclick="resumeVan('Why? :/ Nope, I gotta go :)')">No, stay</button>
-            </div>
+            <div class="thinking-buttons" id="thinking-buttons"></div>
         </div>
     </div>
-
-    <!-- Contact Title -->
     <div class="contact-title">Contact</div>
-
-    <!-- Social Media Icons -->
     <div class="social-icons">
         <a href="https://instagram.com/pour_out_love" target="_blank">
             <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
@@ -248,16 +234,10 @@
             <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Mail_%28iOS%29.svg" alt="Mail">
         </a>
     </div>
-
-    <!-- Countdown Timer -->
     <div class="countdown" id="countdown-timer"></div>
-
-    <!-- Progress Bar -->
     <div class="progress-container">
         <div class="progress-bar">42%</div>
     </div>
-
-    <!-- Profile Section -->
     <div class="profile-img"></div>
     <div class="stats">
         <div><span>479</span> Posts</div>
@@ -280,11 +260,62 @@
         const buttons = document.querySelector(".thinking-buttons");
         const popup = document.getElementById("popup");
         const popupText = document.getElementById("popup-text");
+        let stopCount = 0;
+
+        const defaultMessage = "Why did you stop us? 😡 We are late for delivery, let us go!";
+        const responses = [
+            {
+                text: "Hey! Why'd you stop us? We're rushing to deliver love! 😤",
+                buttons: [
+                    { text: "Sorry, go ahead! 😊", response: "Thanks, off we go! 🚚" },
+                    { text: "Stay a bit! 🥺", response: "Fine, but we're late! 🙄" }
+                ]
+            },
+            {
+                text: "Not again! We're really behind schedule now! 😫",
+                buttons: [
+                    { text: "My bad, go now! 😅", response: "Finally! Zooming off! 💨" },
+                    { text: "One more minute? 😏", response: "You're testing us! 😤" }
+                ]
+            },
+            {
+                text: "Seriously? Third time's not the charm! We're SO late! 😡",
+                buttons: [
+                    { text: "Go, I’m done! 😂", response: "About time! Bye! 🏃‍♂️" },
+                    { text: "Stay, it’s funny! 😈", response: "You're evil! We’re stuck! 😭" }
+                ]
+            },
+            {
+                text: "Okay, you win! We give up! What do you want? 😅",
+                buttons: [
+                    { text: "Deliver now! 🚚", response: "Fine, rushing off! 💨" },
+                    { text: "Chat with me! 💬", response: "Alright, you’re the boss! 😊" }
+                ]
+            }
+        ];
 
         van.addEventListener("click", function() {
             van.style.animationPlayState = "paused";
             cloud.style.display = "block";
+            stopCount++;
+            updateCloudContent();
         });
+
+        function updateCloudContent() {
+            const responseIndex = stopCount % responses.length; // Loop through responses
+            const currentResponse = responses[responseIndex];
+            
+            text.textContent = currentResponse.text;
+            buttons.innerHTML = "";
+
+            currentResponse.buttons.forEach(btn => {
+                const button = document.createElement("button");
+                button.textContent = btn.text;
+                button.className = btn.text.includes("go") || btn.text.includes("Deliver") ? "go-btn" : "stay-btn";
+                button.onclick = () => resumeVan(btn.response);
+                buttons.appendChild(button);
+            });
+        }
 
         function resumeVan(newText) {
             text.innerHTML = newText;
@@ -292,7 +323,7 @@
             setTimeout(() => {
                 cloud.style.display = "none";
                 buttons.style.display = "block";
-                text.innerHTML = "Why did you stop us? 😡 We are late for delivery, let us go!";
+                text.innerHTML = defaultMessage; // Reset to default message
                 van.style.animationPlayState = "running";
             }, 2000);
         }
@@ -320,7 +351,6 @@
                 popupText.style.animation = 'typing 2s steps(40, end) forwards'; // Start typing animation
             }, 10); // Small delay to ensure reset applies
             document.querySelector('.follow-btn').classList.add('highlight');
-            // No auto-hide; wait for OK button
         }
 
         function hidePopup() {
